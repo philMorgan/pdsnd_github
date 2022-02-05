@@ -7,6 +7,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'washington': 'washington.csv' }
 
 print()
+"""functions"""
 
 def city_menu():
     """Defines the city menu"""
@@ -15,7 +16,7 @@ def city_menu():
     print('[2] New York')
     print('[3] Washington')
     print('[0] Exit the program.')
-    
+
 def month_menu():
     """Defines the month menu"""
     print('-'*5 +'Month Menu' + '-'*5 )
@@ -37,12 +38,12 @@ def day_menu():
     print('[4] Wednesday')
     print('[5] Thursday')
     print('[6] Friday')
-    print('[7] Saturday')  
+    print('[7] Saturday')
 
 def city_param():
     """
     Asks user to specify a city to filter the data
-    
+
     Dependencies:
         city_menu()
 
@@ -51,7 +52,7 @@ def city_param():
     """
     global city
     city_menu()
-    
+
     while True:
         try:
             city_option = int(input("Enter the number representing your city: "))
@@ -72,19 +73,19 @@ def city_param():
         except:
             print("You didn't enter a number.")
             #city_option = 0
-         
+
     if city_option == 0:
         print("Thanks for using this program - Time to quit")
         #city = 'quit'
     else:
         print("\n Applying filter for - {} \n".format(city.title()))
-                
+
     return city
-    
+
 def month_param(city):
     """
     Asks user to specify a month to filter the data
-    
+
     Dependencies:
         month_menu()
 
@@ -95,7 +96,7 @@ def month_param(city):
     month=''
     if city != 'quit':
         month_menu()
-        
+
         while True:
             try:
                 month_option = int(input("Enter the number representing the month to filter by: "))
@@ -126,18 +127,18 @@ def month_param(city):
             except:
                 print("You didn't enter a number. ")
                 #month_option = 0
-                
-       
-            
+
+
+
         print("\n Applying filter for - \n{}, {} \n".format(city.title(),month.title()))
-        
-                
-        return month    
+
+
+        return month
 
 def day_param(city):
     """
     Asks user to specify a day to filter the data
-    
+
     Dependencies:
         day_menu()
 
@@ -148,7 +149,7 @@ def day_param(city):
     day=''
     if city != 'quit':
         day_menu()
-        
+
         while True:
             try:
                 day_option = int(input("Enter the number representing the day to filter by: "))
@@ -178,18 +179,18 @@ def day_param(city):
                     break
                 else:
                     print("Not a valid option! ")
-                    
+
             except:
                 print("You didn't enter a number. ")
-                
-                
-       
-            
+
+
+
+
         print("\n Applying filter for - \n{}, {}, {} \n".format(city.title(),month.title(), day.title()))
-        
-                
-        return day   
- 
+
+
+        return day
+
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
@@ -220,7 +221,7 @@ def load_data(city, month, day):
         # use the index of the months list to get the corresponding int
             months = ['january', 'february', 'march', 'april', 'may', 'june']
             month = months.index(month) + 1
-        
+
         # filter by month to create the new dataframe
             df = df[df['month'] == month]
 
@@ -228,9 +229,9 @@ def load_data(city, month, day):
         if day != 'all':
             # filter by day of week to create the new dataframe
             df = df[df['day_of_week'] == day.title()]
-    
+
         return df
-    
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -245,7 +246,7 @@ def get_filters():
     city_param()
     month_param(city)
     day_param(city)
-   
+
     print('-'*40)
     return city, month, day
 
@@ -260,7 +261,7 @@ def time_stats(df):
     months = ['january', 'february', 'march', 'april', 'may', 'june']
     #month = months.index(month) + 1
     print('Most Common Month:', months[popular_month-1].title())
-    
+
     # TO DO: display the most common day of week
     popular_dow = df['day_of_week'].dropna(axis=0).mode()[0]
     print('Most Common day:', popular_dow)
@@ -290,7 +291,7 @@ def station_stats(df):
     df['Trip']=df['Start Station'] + ' | ' + df['End Station']
     popular_trip = df['Trip'].dropna(axis=0).mode()[0]
     print('Most Common Trip (Start Station and End Station ): ', popular_trip)
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -343,14 +344,14 @@ def raw_data(df):
         if raw == 'n':
             break
         elif end > total_rows:
-           print(df.iloc[start:]) 
+           print(df.iloc[start:])
            break
         else:
             #raw_df = df[start,end]
             print(df.iloc[start:end])
             start += 5
             end += 5
-    
+
 def main():
     while True:
         #city, month, day = get_filters()
@@ -364,9 +365,9 @@ def main():
             user_stats(df)
             raw_data(df)
 
-            
-                
-                
+
+
+
         break
 
 
